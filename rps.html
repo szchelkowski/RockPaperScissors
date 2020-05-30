@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Rock Paper Scissors</title>
+  <meta charset="UTF-8"/>
+</head>
+<body>
+  <script>
+    let roundCounter = 0;
+    let playerScore = 0;
+    let computerScore = 0;
+    let tieScore = 0;
+
+    function printMessageWin(
+      playerSelection,
+      computerSelection,
+      playerScore,
+      computerScore,
+      roundCounter,
+      tieScore
+    ) {
+      return `Great, you won the round! ${
+        playerSelection.charAt(0).toUpperCase() +
+        playerSelection.slice(1).toLowerCase()
+      } beats ${computerSelection}. The current score is:\nPlayer: ${playerScore}\nComputer: ${computerScore}.\nRounds played: ${roundCounter}.\nTies: ${tieScore}.`;
+    }
+
+    function printMessageLoss(
+      computerSelection,
+      playerSelection,
+      playerScore,
+      computerScore,
+      roundCounter,
+      tieScore
+    ) {
+      return `Sorry, you lost the round. ${
+        computerSelection.charAt(0).toUpperCase() +
+        computerSelection.slice(1).toLowerCase()
+      } beats ${playerSelection}. The current score is:\nPlayer: ${playerScore}\nComputer: ${computerScore}.\nRounds played: ${roundCounter}.\nTies: ${tieScore}.`;
+    }
+
+    function printMessageTie(
+      playerSelection,
+      playerScore,
+      computerScore,
+      roundCounter,
+      tieScore
+    ) {
+      return `Looks like we have a tie this round... You chose ${playerSelection}, and the computer chose the same.\nThe current score is:\nPlayer: ${playerScore}\nComputer: ${computerScore}.\nRounds played: ${roundCounter}.\nTies: ${tieScore}.`;
+    }
+
+    function printMessageFinalWin(playerScore, computerScore, tieScore) {
+      return `You are the winner! The final score is:\nPlayer: ${playerScore}.\nComputer: ${computerScore}.\nTies: ${tieScore}.`;
+    }
+
+    function printMessageFinalLoss(playerScore, computerScore, tieScore) {
+      return `Sorry, you lost the game. The final score is:\nPlayer: ${playerScore}.\nComputer: ${computerScore}.\nTies: ${tieScore}.`;
+    }
+
+    function printMessageFinalTie(playerScore, computerScore, tieScore) {
+      return `You did not win, but you did not lose either. The final score is:\nPlayer: ${playerScore}.\nComputer: ${computerScore}.\nTies: ${tieScore}.`;
+    }
+
+    // Randomize choice from given array
+    function computerPlay() {
+      const options = ["rock", "paper", "scissors"];
+      let randomizer = Math.floor(Math.random() * options.length);
+      let computerSelection = options[randomizer];
+      return computerSelection;
+    }
+
+    // Bring user input to lowercase and print out messages depending on the result
+    function playRound(playerSelection, computerSelection) {
+      roundCounter++;
+
+      if (playerSelection === "rock" && computerSelection === "paper") {
+        computerScore++;
+        return printMessageLoss(
+          computerSelection,
+          playerSelection,
+          playerScore,
+          computerScore,
+          roundCounter,
+          tieScore
+        );
+      } else if (playerSelection === "paper" && computerSelection === "rock") {
+        playerScore++;
+        return printMessageWin(
+          playerSelection,
+          computerSelection,
+          playerScore,
+          computerScore,
+          roundCounter,
+          tieScore
+        );
+      } else if (playerSelection === "paper" && computerSelection === "scissors") {
+        computerScore++;
+        return printMessageLoss(
+          computerSelection,
+          playerSelection,
+          playerScore,
+          computerScore,
+          roundCounter,
+          tieScore
+        );
+      } else if (playerSelection === "scissors" && computerSelection === "paper") {
+        playerScore++;
+        return printMessageWin(
+          playerSelection,
+          computerSelection,
+          playerScore,
+          computerScore,
+          roundCounter,
+          tieScore
+        );
+      } else if (playerSelection === "scissors" && computerSelection === "rock") {
+        computerScore++;
+        return printMessageLoss(
+          computerSelection,
+          playerSelection,
+          playerScore,
+          computerScore,
+          roundCounter,
+          tieScore
+        );
+      } else if (playerSelection === "rock" && computerSelection === "scissors") {
+        playerScore++;
+        return printMessageWin(
+          playerSelection,
+          computerSelection,
+          playerScore,
+          computerScore,
+          roundCounter,
+          tieScore
+        );
+      } else {
+        tieScore++;
+        return printMessageTie(
+          playerSelection,
+          playerScore,
+          computerScore,
+          roundCounter,
+          tieScore
+        );
+      }
+    }
+
+    function game() {
+      for (let i = 0; i < 5; i++) {
+        playerSelection = window
+          .prompt("Choose your pick from rock, paper or scissors.")
+          .toLowerCase();
+        computerSelection = computerPlay();
+        console.log(playRound(playerSelection, computerSelection));
+      }
+      if (playerScore > computerScore) {
+        return printMessageFinalWin(playerScore, computerScore, tieScore);
+      } else if (playerScore < computerScore) {
+        return printMessageFinalLoss(playerScore, computerScore, tieScore);
+      } else {
+        return printMessageFinalTie(playerScore, computerScore, tieScore);
+      }
+    }
+  </script>
+</body>
+</html>
